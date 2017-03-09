@@ -146,14 +146,15 @@ public class Convert {
 		for(Entry<String, Map<String, KeyResult>> entry : result.entrySet()){
 			String nodeName = entry.getKey();
 			System.out.println("root name : " + nodeName);
-			Row rowForNode = sheet.createRow(rowIdx);
-			rowIdx++;
-			rowForNode.createCell(0).setCellValue(nodeName);
+//			Row rowForNode = sheet.createRow(rowIdx);
+//			rowIdx++;
+//			rowForNode.createCell(0).setCellValue(nodeName);
 			
 			Map<String, KeyResult> rsMap = entry.getValue();
 			for(KeyResult kr: rsMap.values()){
 				Row rowForKey = sheet.createRow(rowIdx);
 				rowIdx++;
+				rowForKey.createCell(0).setCellValue(nodeName);;
 				rowForKey.createCell(1).setCellValue(kr.getKey());;
 				rowForKey.createCell(2).setCellValue(kr.isCore());
 				rowForKey.createCell(3).setCellValue(kr.isDc());
