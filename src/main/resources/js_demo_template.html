@@ -1,0 +1,69 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+</head>
+
+<body>
+	<span>SOURCE JSON DATA:</span>
+	<textarea id="source" rows="30" cols="50" placeholder="pls input raw jason data..."></textarea>
+	<span>TARGET JSON DATA:</span>
+	<textarea id="result" rows="30" cols="50" placeholder="result jason data here..."></textarea>
+	<br>
+	<br>
+	<input id="btn" type="button" onclick="trigger()" style="width: 80;height: 40;color: red;" value="简化格式"/>
+		
+</body>
+<script type="text/javascript">
+
+function trigger(){
+	var src = document.getElementById("source");
+	//console.log(src.value);
+	
+	var json = eval('(' + src.value + ')');
+	/*
+	console.log(src.value);
+	console.info(json.PolicyLobList);
+	console.warn('------------------');
+	console.warn(json.PolicyCustomerList[1].Customer);
+	console.warn(json.PolicyCustomerList[1].Customer.length);
+	console.warn(typeof json.PolicyCustomerList[1].Customer);
+	console.warn('------------------');
+	*/
+	handleJson(json);
+	
+	//console.warn(json);
+	
+	var res = document.getElementById("result");
+	res.value = JSON.stringify(json);
+}
+
+
+function handleJson(json){
+	for(var key in json){
+		console.info(key);
+		var jsonValue = json[key];
+
+		if(typeof  jsonValue == 'object'){
+			//value is array
+			if(jsonValue.lentgh != 'undefined' && jsonValue.length > 0){
+				var arr = json[key];
+				for(var i = 0; i<arr.length; i++){
+					handleJson(arr[i]);				
+				}
+			//value is json object
+			}else{
+				handleJson(jsonValue);
+			}
+		}else{
+			json[key] = '';
+		}
+		
+	}
+}
+
+
+
+</script>
+
+
+</html>
