@@ -3,9 +3,8 @@ package com.bran.java8;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collector;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -38,7 +37,25 @@ public class LambdaTest {
 //		lambdaMethodTest();
 		
 //		streamTest();
-		streamHandleTest();
+//		streamHandleTest();
+		
+//		optionalTest();
+		optionalTest2();
+	}
+	
+	
+	public static void optionalTest(){
+		Optional< String > fullName = Optional.ofNullable( null );
+		System.out.println( "Full Name is set? " + fullName.isPresent() );        
+		System.out.println( "Full Name: " + fullName.orElseGet( () -> "[none]" ) ); 
+		System.out.println( fullName.map( s -> "Hey " + s + "!" ).orElse( "Hey no-Stranger!" ) );
+	}
+	
+	public static void optionalTest2(){
+		Optional< String > fullName = Optional.ofNullable( "test" );
+		System.out.println( "Full Name is set? " + fullName.isPresent() );        
+		System.out.println( "Full Name: " + fullName.orElseGet( () -> "[none]" ) ); 
+		System.out.println( fullName.map( s -> "Hey " + s + "!" ).orElse( "Hey no-Stranger!" ) );
 	}
 	
 	public static void streamHandleTest(){
@@ -46,7 +63,7 @@ public class LambdaTest {
 		Stream<List<Integer>> lstStream = Stream.of(
 				Arrays.asList(1), 
 				Arrays.asList(3,5), 
-				Arrays.asList(7,9,11,3,5,7,11));
+				Arrays.asList(7,9,11,3,5,7,13));
 		
 		Stream<Integer> strStream = lstStream.flatMap((childList) -> childList.stream());
 //		strStream.forEach(System.out::println);
@@ -78,6 +95,18 @@ public class LambdaTest {
 //		int sum = strStream.mapToInt(num -> num.intValue()).sum();
 //		System.out.println("sum() is " + sum);
 		
+		//reduce()
+//		int sumOf = strStream.reduce((sum, item) -> sum + item).get();
+//		System.out.println("sumary of all eles :" + sumOf);
+		
+//		int sumOf2 = strStream.reduce(10000, (sum, item) -> sum + item);
+//		System.out.println("sumary of all eles with init 10000:" + sumOf2);
+		
+		//allMatch()
+//		boolean flag = strStream.allMatch(item -> item < 100);
+//		System.out.println("all ele<100 is :" + flag);
+		
+		strStream.max((o1, o2) -> o1.compareTo(o2)).ifPresent(System.out::println);
 		
 	}
 	
@@ -119,6 +148,9 @@ public class LambdaTest {
 		List<String> lst = Arrays.asList(new String[]{"hello", "this", "world"});
 		List<Person> ps = lst.stream().map(Person::new).collect(Collectors.toList());
 		ps.forEach(System.out::println);
+		
+		
+		
 	}
 	
 	public void lambdaThisTest(){
